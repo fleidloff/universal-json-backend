@@ -1,0 +1,22 @@
+{
+  "name": "universal-json-backend",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fleidloff/universal-json-backend.git"
+  },
+  "author": "fleidloff",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fleidloff/universal-json-backend/issues"
+  },
+  "homepage": "https://github.com/fleidloff/universal-json-backend#readme",
+  "dependencies": {
+    "mongodb": "^3.6.2"
+  }
+}
