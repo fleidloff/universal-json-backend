@@ -14,6 +14,11 @@ async function bootstrapServer() {
       const results = await dbClient.find(req.params.collection, {});
       res.send(results);
     })
+    // todo: how to do this more rest style?
+    .post("/:collection/criteria", async (req, res) => {
+      const results = await dbClient.find(req.params.collection, req.body);
+      res.send(results);
+    })
     .get("/:collection/:id", async (req, res) => {
       const results = await dbClient.findById(
         req.params.collection,
@@ -21,9 +26,18 @@ async function bootstrapServer() {
       );
       res.send(results);
     })
-    .delete("/pets/:id", async (req, res) => {})
-    .post("/pets/:name/:age", async (req, res) => {})
-    .patch("/pets/:id", async (req, res) => {});
+    .post("/:collection", async (req, res) => {
+      const result = await dbClient.add(req.params.collection, req.body);
+      res.send(result);
+    })
+    .delete("/:collection/:id", async (req, res) => {
+      await dbClient.remove(req.params.collection, req.params.id);
+      res.end();
+    })
+    .put("/:collection/:id", async (req, res) => {
+      await dbClient.update(req.params.collection, req.params.id, req.body);
+      res.end();
+    });
 
   service.use((req, res, next) => {
     // do something

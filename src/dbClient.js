@@ -18,6 +18,7 @@ function bootstrapClient() {
       resolve({
         find: (collection, criteria = {}) =>
           new Promise((resolve, reject) => {
+            // todo: is Promise really necessary here?
             db.collection(collection)
               .find(criteria)
               .toArray(function (err, docs) {
@@ -28,7 +29,23 @@ function bootstrapClient() {
               });
           }),
         findById: (collection, id) =>
-          db.collection(collection).findOne({ _id: new MongoDb.ObjectID(id) }),
+          db.collection(collection).findOne({ _id: new MongoDb.ObjectId(id) }),
+        add: async (collection, item) => {
+          await db.collection(collection).insertOne(item);
+          return item;
+        },
+        remove: async (collection, id) => {
+          const { acknowledged } = await db
+            .collection(collection)
+            .deleteOne({ _id: new MongoDb.ObjectId(id) });
+          return acknowledged;
+        },
+        update: async (collection, id, update) => {
+          const { acknowledged, ...rest } = await db
+            .collection(collection)
+            .updateOne({ _id: new MongoDb.ObjectId(id) }, { $set: update }); //todo: use $unset to remove fields for real
+          return acknowledged;
+        },
         close: () => client.close(),
       });
     });
