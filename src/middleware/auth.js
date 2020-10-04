@@ -11,6 +11,7 @@ export default function auth(req, res, next) {
 
 export function unless(path, middleware) {
   return function (req, res, next) {
+    console.log("req.path", req.path);
     if (path === req.path) {
       return next();
     } else {
