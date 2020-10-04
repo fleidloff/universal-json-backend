@@ -13,7 +13,6 @@ async function bootstrapServer() {
   service
     .post("/secret", getSecret)
     .get("/:collection", async (req, res) => {
-      console.log("get collection");
       const results = await dbClient.find(req.params.collection, {});
       res.send(results);
     })

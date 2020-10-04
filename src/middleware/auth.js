@@ -11,8 +11,6 @@ export default function auth(req, res, next) {
 
 export function unless(path, middleware) {
   return function (req, res, next) {
-    console.log("req.path", req.path);
-    console.log(req);
     if (path === req.path) {
       return next();
     } else {
@@ -22,6 +20,5 @@ export function unless(path, middleware) {
 }
 
 export function getSecret(req, res) {
-  console.log("get secret");
   res.send({ secret: md5(req.headers.password) });
 }
