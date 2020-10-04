@@ -14,6 +14,7 @@ async function bootstrapServer() {
   nestedRouter
     .post("/secret", getSecret)
     .get("/:collection", async (req, res) => {
+      console.log("get collection");
       const results = await dbClient.find(req.params.collection, {});
       res.send(results);
     })
@@ -42,7 +43,7 @@ async function bootstrapServer() {
       res.send(201);
     });
 
-  service.use("/", nestedRouter);
+  service.use("/node", nestedRouter);
   const server = await service.start(port, "0.0.0.0");
 
   return server;
