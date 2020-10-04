@@ -8,6 +8,7 @@ import bootstrapDbClient from "./dbClient.js";
 async function bootstrapServer() {
   const service = restana();
   const nestedRouter = service.newRouter();
+  nestedRouter.use(methodOverride());
   nestedRouter.use(bodyParser.json());
   nestedRouter.use(unless("/secret", auth));
   const dbClient = await bootstrapDbClient();
