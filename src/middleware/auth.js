@@ -21,5 +21,6 @@ export function unless(path, middleware) {
 }
 
 export function getSecret(req, res) {
+  console.log("get secret");
   res.send({ secret: md5(req.headers.password) });
 }

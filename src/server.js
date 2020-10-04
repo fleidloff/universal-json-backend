@@ -42,7 +42,7 @@ async function bootstrapServer() {
       res.send(201);
     });
 
-  service.use("/node", nestedRouter);
+  service.use("/", nestedRouter);
   const server = await service.start(port, "0.0.0.0");
 
   return server;
