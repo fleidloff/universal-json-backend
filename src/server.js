@@ -9,7 +9,6 @@ async function bootstrapServer() {
   const service = restana();
   const nestedRouter = service.newRouter();
   nestedRouter.use(bodyParser.json());
-  nestedRouter.use(methodOverride());
   nestedRouter.use(unless("/secret", auth));
   const dbClient = await bootstrapDbClient();
 
@@ -45,6 +44,7 @@ async function bootstrapServer() {
       res.send(201);
     });
 
+  service.use(methodOverride());
   service.use("/node", nestedRouter);
   const server = await service.start(port, "0.0.0.0");
 
