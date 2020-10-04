@@ -42,7 +42,7 @@ async function bootstrapServer() {
       res.send(201);
     });
 
-  const server = await service.start(port);
+  const server = await service.start(port, "0.0.0.0");
 
   return server;
 }
