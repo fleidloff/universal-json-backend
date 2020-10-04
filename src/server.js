@@ -1,25 +1,15 @@
 import bodyParser from "body-parser";
 import restana from "restana";
-import md5 from "md5";
+import auth from "./middleware/auth.js";
 import { port } from "../config/config.js";
 import bootstrapDbClient from "./dbClient.js";
 
-const users = {
-  fred: "3173700ce0d5803b8566d2bf06a5a90b",
-};
 async function bootstrapServer() {
   const service = restana();
   service.use(bodyParser.json());
+  service.use(auth);
 
   const dbClient = await bootstrapDbClient();
-
-  service.use((req, res, next) => {
-    // do something
-    if (users[req.headers.user] !== md5(req.headers.secret)) {
-      return res.send(401);
-    }
-    return next();
-  });
 
   service
     .get("/:collection", async (req, res) => {
@@ -44,11 +34,11 @@ async function bootstrapServer() {
     })
     .delete("/:collection/:id", async (req, res) => {
       await dbClient.remove(req.params.collection, req.params.id);
-      res.end();
+      res.send(201);
     })
     .put("/:collection/:id", async (req, res) => {
       await dbClient.update(req.params.collection, req.params.id, req.body);
-      res.end();
+      res.send(201);
     });
 
   const server = await service.start(port);
