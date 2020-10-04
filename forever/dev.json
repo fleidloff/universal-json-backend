@@ -1,0 +1,11 @@
+{
+  "uid": "universal-json-backend",
+  "append": true,
+  "watch": true,
+  "script": "./app.js",
+  "sourceDir": "./",
+  "watchDirectory": "./src/**/*",
+  "logFile": "/home/fred/dev/universal-json-backend/forever/forever.log",
+  "outFile": "/home/fred/dev/universal-json-backend/forever/out.log",
+  "errFile": "/home/fred/dev/universal-json-backend/forever/error.log"
+}
