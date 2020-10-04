@@ -11,3 +11,17 @@ export default function auth(req, res, next) {
   }
   return next();
 }
+
+export function unless(path, middleware) {
+  return function (req, res, next) {
+    if (path === req.path) {
+      return next();
+    } else {
+      return middleware(req, res, next);
+    }
+  };
+}
+
+export function getSecret(req, res) {
+  res.send({ secret: md5(req.headers.password) });
+}
