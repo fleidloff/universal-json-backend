@@ -6,12 +6,12 @@ import bootstrapDbClient from "./dbClient.js";
 
 async function bootstrapServer() {
   const service = restana();
-  service.use(bodyParser.json());
-  service.use(unless("/secret", auth));
-
+  const nestedRouter = service.newRouter();
+  nestedRouter.use(bodyParser.json());
+  nestedRouter.use(unless("/secret", auth));
   const dbClient = await bootstrapDbClient();
 
-  service
+  nestedRouter
     .post("/secret", getSecret)
     .get("/:collection", async (req, res) => {
       const results = await dbClient.find(req.params.collection, {});
@@ -42,6 +42,7 @@ async function bootstrapServer() {
       res.send(201);
     });
 
+  service.use("/node", nestedRouter);
   const server = await service.start(port, "0.0.0.0");
 
   return server;
