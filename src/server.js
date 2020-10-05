@@ -8,6 +8,13 @@ import bootstrapDbClient from "./dbClient.js";
 async function bootstrapServer() {
   const service = restana();
   service.use(headers);
+  service.use((req, res, next) => {
+    if (req.method === "OPTIONS") {
+      return res.send(201);
+    } else {
+      return next();
+    }
+  });
   service.use(unless("/secret", auth));
   service.use(bodyParser.json());
 

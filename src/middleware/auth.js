@@ -3,9 +3,6 @@ import { users } from "../../config/config.js";
 
 export default function auth(req, res, next) {
   // do something
-  if (req.method === "OPTIONS") {
-    res.send(201);
-  }
   if (!req.headers["x-user"] || !req.headers["x-secret"]) {
     return res.send(401);
   }
@@ -26,8 +23,5 @@ export function unless(path, middleware) {
 }
 
 export function getSecret(req, res) {
-  if (req.method === "OPTIONS") {
-    res.send(201);
-  }
   res.send({ secret: md5(req.headers["x-password"]) });
 }
