@@ -1,4 +1,5 @@
 const bootstrapClient = require("./client.js");
+const secrets = require("./config.js").secrets;
 
 const client = bootstrapClient("http://localhost:8080", "test-collection");
 const clientProd = bootstrapClient(
@@ -15,7 +16,7 @@ test("initial request fails if not authorized", async () => {
 });
 
 test("collection is initially empty", async () => {
-  client.auth("fred", "15df34e17c3808f557161deb1acaae28");
+  client.auth("fred", secrets.fred);
   const response = await client.get();
   expect(response?.data?.length).toBe(0);
 });
