@@ -3,6 +3,14 @@ const axios = require("axios").default;
 module.exports = function bootstrapClient(url, collection) {
   const instance = axios.create();
 
+  function headers(o) {
+    return {
+      ["x-user"]: o.user,
+      ["x-secret"]: o.secret,
+      accept: "*/*",
+    };
+  }
+
   return {
     user: "someone",
     secret: "some secret",
@@ -10,11 +18,7 @@ module.exports = function bootstrapClient(url, collection) {
       await axios({
         url: `${url}/${collection}`,
         method: "GET",
-        headers: {
-          ["x-user"]: this.user,
-          ["x-secret"]: this.secret,
-          accept: "*/*",
-        },
+        headers: headers(this),
       }),
     getById: (id) => Promise.resolve(null),
     add: (item) => Promise.resolve(null),
