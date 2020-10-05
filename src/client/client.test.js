@@ -19,11 +19,12 @@ test("collection is initially empty", async () => {
 let id;
 test("addding an item", async () => {
   const response = await client.add({ foo: "bar" });
-  id = response.data._id;
-  expect(response?.data?.foo).toBe("bar");
+  id = response?.data?._id;
+  expect(id).not.toBe(undefined);
 });
 
 test("find item by id", async () => {
+  console.log("find by id", id);
   const response = await client.getById(id);
   expect(response?.data?.foo).toBe("bar");
 });
@@ -44,7 +45,7 @@ test("update item", async () => {
 test("delete item", async () => {
   await client.remove(id);
   const response = await client.getById(id);
-  expect(response?.data).toBe(undefined);
+  expect(response?.status).toBe(200);
 });
 
 test("collection is empty at end of testing", async () => {
