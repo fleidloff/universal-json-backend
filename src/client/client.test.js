@@ -1,6 +1,10 @@
 const bootstrapClient = require("./client.js");
 
 const client = bootstrapClient("http://localhost:8080", "test-collection");
+const clientProd = bootstrapClient(
+  "https://fleidlof.uber.space/node",
+  "test-collection"
+);
 
 test("initial request fails if not authorized", async () => {
   try {
