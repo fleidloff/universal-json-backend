@@ -1,13 +1,16 @@
 import bodyParser from "body-parser";
 import restana from "restana";
 import auth, { getSecret, unless } from "./middleware/auth.js";
+import headers from "./middleware/headers.js";
 import { port } from "../config/config.js";
 import bootstrapDbClient from "./dbClient.js";
 
 async function bootstrapServer() {
   const service = restana();
-  service.use(bodyParser.json());
+  service.use(headers);
   service.use(unless("/secret", auth));
+  service.use(bodyParser.json());
+
   const dbClient = await bootstrapDbClient();
 
   service

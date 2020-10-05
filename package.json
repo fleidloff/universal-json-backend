@@ -5,9 +5,10 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "dev": "forever start ./forever/dev.json",
-    "stop-dev": "forever stopall"
+    "stop-dev": "forever stopall",
+    "restart-prod": "supervisorctl restart universal-json-backend"
   },
   "repository": {
     "type": "git",
@@ -20,10 +21,14 @@
   },
   "homepage": "https://github.com/fleidloff/universal-json-backend#readme",
   "dependencies": {
+    "axios": "^0.20.0",
     "body-parser": "^1.19.0",
     "forever": "^3.0.2",
     "md5": "^2.3.0",
     "mongodb": "^3.6.2",
     "restana": "^4.7.4"
+  },
+  "devDependencies": {
+    "jest": "^26.4.2"
   }
 }
